@@ -1,22 +1,17 @@
-package com.example.demo.entity;
+package com.example.demo.dto;
 
 import com.example.demo.validation.ValidIpRange;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotNull;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IPFilterRule {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class IPFilterRuleCreateDTO {
     @NotNull(message = "Source IP range cannot be null")
     @ValidIpRange(message = "Invalid source IP range format")
     private String sourceIpRange;
@@ -27,7 +22,4 @@ public class IPFilterRule {
 
     @NotNull(message = "Allow/deny status cannot be null")
     private boolean allow;  // true: allow, false: deny
-
-    @Version
-    private Long version;
 }

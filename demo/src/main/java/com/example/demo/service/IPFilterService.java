@@ -1,32 +1,37 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.IPFilterRule;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.IPFilterRuleRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class IPFilterService {
 
-    private final IPFilterRuleRepository ipFilterRuleRepositor;
+    private final IPFilterRuleRepository ipFilterRuleRepository;
 
     public IPFilterRule addRule(IPFilterRule rule) {
-        return ipFilterRuleRepositor.save(rule);
+        return ipFilterRuleRepository.save(rule);
     }
 
     public void removeRule(Long id) {
-        ipFilterRuleRepositor.deleteById(id);
+        if (!ipFilterRuleRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Rule not found with id: " + id);
+        }
+        ipFilterRuleRepository.deleteById(id);
     }
 
     public List<IPFilterRule> getAllRules() {
-        return ipFilterRuleRepositor.findAll();
+        return ipFilterRuleRepository.findAll();
     }
 
-    // IP adres çiftini kontrol eden bir yöntem eklenebilir
     public boolean checkIpPair(String sourceIP, String destinationIP) {
         // Kontrol algoritması buraya eklenebilir
+        // Örnek: Veritabanındaki kurallarla karşılaştırma yapılabilir
         return false;
     }
 }
