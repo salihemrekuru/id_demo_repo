@@ -1,0 +1,77 @@
+<!-- src/main/resources/templates/ipfilter/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>IP Filter Management</title>
+</head>
+<body>
+
+<div class="container">
+  <!-- IP Filter Rule Ekleme Formu -->
+  <h2>Add IP Filter Rule</h2>
+  <form id="addRuleForm" th:action="@{/ipfilter/add}" method="post">
+    <label for="sourceIPRange">Source IP Range :</label>
+    <input type="text" id="sourceIPRange" name="sourceIPRange" required>
+
+    <label for="destinationIPRange">Destination IP Range :</label>
+    <input type="text" id="destinationIPRange" name="destinationIP" required>
+
+    <label for="allow">Allow:</label>
+    <input type="checkbox" id="allow" name="allow" value="true">
+
+    <button type="submit">Add Rule</button>
+  </form>
+
+  <!-- IP Filter Rule Kaldırma Formu -->
+  <h2>Remove IP Filter Rule</h2>
+  <form id="removeRuleForm" th:action="@{/ipfilter/remove}" method="post">
+    <label for="ruleId">Rule ID:</label>
+    <input type="number" id="ruleId" name="ruleId" required>
+    <button type="submit">Remove Rule</button>
+  </form>
+
+  <!-- IP Check Formu -->
+  <h2>Check IP Pair</h2>
+  <form id="checkRuleForm" th:action="@{/ipfilter/check}" method="post">
+    <label for="sourceIP">Source IP :</label>
+    <input type="text" id="sourceIP" name="sourceIP" required>
+
+    <label for="destinationIP">Destination IP :</label>
+    <input type="text" id="destinationIP" name="destinationIP" required>
+
+    <button type="submit">Check</button>
+  </form>
+
+  <!-- Check Sonucu -->
+  <div id="checkRuleResultDiv" th:if="${allowed != null}">
+    <h3>Check Result</h3>
+    <p th:text="${sourceIP}">Source IP</p>
+    <p th:text="${destinationIP}">Destination IP</p>
+    <p th:text="${allowed ? 'Allowed' : 'Denied'}">Result</p>
+  </div>
+
+  <!-- Mevcut Kurallar Listesi -->
+  <h2>Existing IP Filter Rules</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Source Range</th>
+      <th>Destination Range</th>
+      <th>Allow/Deny</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rule : ${rules}">
+      <td th:text="${rule.id}">ID</td>
+      <td th:text="demoData">Source Range</td>
+      <td th:text="demoData">Destination Range</td>
+      <td th:text="${rule.allow ? 'Allow' : 'Deny'}">Allow/Deny</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
