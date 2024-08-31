@@ -1,5 +1,6 @@
-package com.example.demo.exception;
+package com.example.demo.exceptions.exceptionhandler;
 
+import com.example.demo.exceptions.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

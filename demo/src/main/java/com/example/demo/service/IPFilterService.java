@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.IPFilterRule;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.exceptions.exception.ResourceNotFoundException;
 import com.example.demo.repository.IPFilterRuleRepository;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;

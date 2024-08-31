@@ -3,20 +3,17 @@ package com.example.demo.controller;
 import com.example.demo.dto.ErrorResponse;
 import com.example.demo.dto.IPFilterRuleCreateDTO;
 import com.example.demo.entity.IPFilterRule;
-import com.example.demo.mapper.IPFilterRuleMapper;
 import com.example.demo.service.IPFilterService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +23,7 @@ import java.util.stream.Collectors;
 public class IPFilterUIController {
 
     private final IPFilterService ipFilterService;
-    private final IPFilterRuleMapper ipFilterRuleMapper;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/index")
     public String showFilterPage(Model model) {
@@ -38,7 +35,7 @@ public class IPFilterUIController {
             @Valid @ModelAttribute("rule") IPFilterRuleCreateDTO ruleDTO, BindingResult result) {
         RedirectView redirectView;
         if (!result.hasErrors()) {
-            IPFilterRule ipFilterRule = ipFilterRuleMapper.toEntity(ruleDTO);
+            IPFilterRule ipFilterRule = modelMapper.map(ruleDTO, IPFilterRule.class);
             IPFilterRule savedRule = ipFilterService.addRule(ipFilterRule);
             // TODO hata durumunu kontrol et
             ipFilterService.addRule(ipFilterRule);
